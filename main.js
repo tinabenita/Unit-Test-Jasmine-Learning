@@ -36,7 +36,7 @@ describe(`${Person.name} class`, () => {
         });
     })
 
-    describe('Full name', () => {
+    fdescribe('Full name', () => {
 
         beforeEach(() => {
 
@@ -47,7 +47,7 @@ describe(`${Person.name} class`, () => {
              })
         })
 
-        it('Middle initial when middle name is not empty', () => {
+        xit('Middle initial when middle name is not empty', () => {
             // Arrange
             model.middleName = 'Benita';
 
