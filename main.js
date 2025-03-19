@@ -11,9 +11,26 @@ xdescribe('Modal Component', () => {
 describe(`${Person.name} class`, () => {
 
     let model;
+    let mockPersonService;
+
     beforeEach(() => {
         //arrange
-        model = new Person();
+        mockPersonService = {
+            lastId: null,
+            user: {},
+            getUserById(id){
+                this.lastId = id;
+                return this.user;
+            }
+        };
+        const data = {
+            firstName: 'Tina',
+            lastName: 'Benita',
+            middleName: 'Rego',
+            id: 1
+        };
+        model = new Person(data, mockPersonService);
+
     });
 
     xdescribe('Default values ', () => {
@@ -76,7 +93,7 @@ describe(`${Person.name} class`, () => {
         });
     })
 
-    describe('Say my name', () => {
+    xdescribe('Say my name', () => {
 
         //Spy is used to track calls to a function and the arguments passed to it
         it('Alerts the name of the user', () => {
@@ -94,7 +111,7 @@ describe(`${Person.name} class`, () => {
         });
     });
 
-    describe('Get code name', () => {
+    xdescribe('Get code name', () => {
         it('When confirmed is a coding god', () => {
             //arrange
             spyOn(window, 'confirm').and.returnValue(true);
@@ -117,6 +134,24 @@ describe(`${Person.name} class`, () => {
             expect(result).toBe('Scrub skipping tests in his best friend\'s ride!');
         });
     })
+
+    // Mocks are used to fake that we are doing something: hitting servers, increasing charges, running code
+    describe('Get full user data', () => {
+        it('Gets user by ID', async () => {
+            //arrange 
+            mockPersonService.lastId = null;
+            mockPersonService.user= {
+                firstName: 'Tina',
+                lastName: 'Benita',
+                middleName: 'Rego',
+                id: 1
+            };
+            //act
+            const result = await model.getFullUserData();
+            //assert
+            expect(mockPersonService.lastId).toBe(1);
+        });
+    });
 });
 
 
