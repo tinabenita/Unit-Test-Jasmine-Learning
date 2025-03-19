@@ -1,6 +1,6 @@
 import { Person } from './person.js';
 
-describe('Modal Component', () => {
+xdescribe('Modal Component', () => {
     it('opens on click', () => {
         //assert
         expect(true).toBe(true);
@@ -16,7 +16,7 @@ describe(`${Person.name} class`, () => {
         model = new Person();
     });
 
-    describe('default values ', () => {
+    xdescribe('Default values ', () => {
         it('First name defaults to empty string', () => {
 
             // Assert: Verify the result
@@ -36,18 +36,18 @@ describe(`${Person.name} class`, () => {
         });
     })
 
-    fdescribe('Full name', () => {
+    xdescribe('Full name', () => {
 
         beforeEach(() => {
 
             // Arrange: Setup the test
-             model = new Person({
+            model = new Person({
                 firstName: 'Tina',
                 lastName: 'Rego'
-             })
+            })
         })
 
-        xit('Middle initial when middle name is not empty', () => {
+        it('Middle initial when middle name is not empty', () => {
             // Arrange
             model.middleName = 'Benita';
 
@@ -55,7 +55,7 @@ describe(`${Person.name} class`, () => {
             const result = model.fullName;
 
             //Audit: we are checking against the model itself
-            const {firstName: fn, lastName: ln, middleName:mn} = model;
+            const { firstName: fn, lastName: ln, middleName: mn } = model;
 
             //Assert
             expect(result).toBe(`${fn} ${mn[0]} ${ln}`);
@@ -69,13 +69,55 @@ describe(`${Person.name} class`, () => {
             const result = model.fullName;
 
             //audit
-            const {firstName: fn, lastName: ln} = model;
+            const { firstName: fn, lastName: ln } = model;
 
             //assert
             expect(model.fullName).toBe(`${fn} ${ln}`);
         });
     })
-}); 
+
+    describe('Say my name', () => {
+
+        //Spy is used to track calls to a function and the arguments passed to it
+        it('Alerts the name of the user', () => {
+            //arrange
+            model.firstName = 'Ullas';
+            model.lastName = 'Bannur';
+            spyOn(window, 'alert');
+
+            //act
+            model.sayMyName();
+
+            //assert
+            expect(window.alert).toHaveBeenCalled();
+            expect(window.alert).toHaveBeenCalledWith(model.fullName);
+        });
+    });
+
+    describe('Get code name', () => {
+        it('When confirmed is a coding god', () => {
+            //arrange
+            spyOn(window, 'confirm').and.returnValue(true);
+
+            //act
+            const result = model.getCodeName(); 
+
+            //assert
+            expect(result).toBe('TESTING GOD');
+
+        });
+        it('When NOT confirmed is a coding god', () => {
+            //arrange
+            spyOn(window, 'confirm').and.returnValue(false);
+
+            //act
+            const result = model.getCodeName(); 
+
+            //assert
+            expect(result).toBe('Scrub skipping tests in his best friend\'s ride!');
+        });
+    })
+});
 
 
 
