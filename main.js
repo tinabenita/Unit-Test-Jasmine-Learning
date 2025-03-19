@@ -10,42 +10,73 @@ describe('Modal Component', () => {
 // Test suite
 describe(`${Person.name} class`, () => {
 
+    let model;
+    beforeEach(() => {
+        //arrange
+        model = new Person();
+    });
+
     describe('default values ', () => {
         it('First name defaults to empty string', () => {
-            // Arrange: Set up the initial conditions
-            const data = { firstName: null };
-
-            // Act: Perform the action
-            const model = new Person(data);
 
             // Assert: Verify the result
             expect(model.firstName).toBe('');
         });
 
         it('Middle name defaults to empty string', () => {
-            //arrange 
-            const data = { middleName: null };
-
-            //act
-            const model = new Person(data);
 
             //assert
             expect(model.middleName).toBe('');
         });
 
         it('Last name defaults to empty string', () => {
-            //arrange 
-            const data = { lastName: null };
-
-            //act
-            const model = new Person(data);
 
             //assert
             expect(model.lastName).toBe('');
         });
     })
 
-});
+    describe('Full name', () => {
+
+        beforeEach(() => {
+
+            // Arrange: Setup the test
+             model = new Person({
+                firstName: 'Tina',
+                lastName: 'Rego'
+             })
+        })
+
+        it('Middle initial when middle name is not empty', () => {
+            // Arrange
+            model.middleName = 'Benita';
+
+            //Act 
+            const result = model.fullName;
+
+            //Audit: we are checking against the model itself
+            const {firstName: fn, lastName: ln, middleName:mn} = model;
+
+            //Assert
+            expect(result).toBe(`${fn} ${mn[0]} ${ln}`);
+        });
+
+        it('When NO middle name returns first and last', () => {
+            //arrange
+            model.middleName = '';
+
+            //act
+            const result = model.fullName;
+
+            //audit
+            const {firstName: fn, lastName: ln} = model;
+
+            //assert
+            expect(model.fullName).toBe(`${fn} ${ln}`);
+        });
+    })
+}); 
+
 
 
 
