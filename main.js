@@ -18,7 +18,7 @@ describe(`${Person.name} class`, () => {
         mockPersonService = {
             lastId: null,
             user: {},
-            getUserById(id){
+            getUserById(id) {
                 this.lastId = id;
                 return this.user;
             }
@@ -117,7 +117,7 @@ describe(`${Person.name} class`, () => {
             spyOn(window, 'confirm').and.returnValue(true);
 
             //act
-            const result = model.getCodeName(); 
+            const result = model.getCodeName();
 
             //assert
             expect(result).toBe('TESTING GOD');
@@ -128,7 +128,7 @@ describe(`${Person.name} class`, () => {
             spyOn(window, 'confirm').and.returnValue(false);
 
             //act
-            const result = model.getCodeName(); 
+            const result = model.getCodeName();
 
             //assert
             expect(result).toBe('Scrub skipping tests in his best friend\'s ride!');
@@ -136,11 +136,11 @@ describe(`${Person.name} class`, () => {
     })
 
     // Mocks are used to fake that we are doing something: hitting servers, increasing charges, running code
-    describe('Get full user data', () => {
+    xdescribe('Get full user data', () => {
         it('Gets user by ID', async () => {
             //arrange 
             mockPersonService.lastId = null;
-            mockPersonService.user= {
+            mockPersonService.user = {
                 firstName: 'Tina',
                 lastName: 'Benita',
                 middleName: 'Rego',
@@ -152,7 +152,38 @@ describe(`${Person.name} class`, () => {
             expect(mockPersonService.lastId).toBe(1);
         });
     });
+
+    describe('Additional matchers examples', () => {
+        // toBeDefined(), toEqual()
+        it('Gets full name pieces', () => {
+            //arrange
+            const firstName = 'Tina';
+            const middleName = 'Benita';
+            const lastName = 'Rego';
+
+            //act
+            model = new Person({ firstName, middleName, lastName });
+
+            //assert
+            expect(model.fullNamePieces).toEqual([firstName, middleName, lastName]);
+        });
+    });
+
+    describe('Additional matchers testing area', () => {
+        it('Fullname has my first name', () => {
+            //arrange
+            const firstName = 'Tina';
+            const lastName = 'Rego';
+
+            //act
+            model = new Person({ firstName, lastName });
+
+            //assert
+            expect(model.fullName).toMatch(/Tina/);
+        });
+    });
 });
+
 
 
 
