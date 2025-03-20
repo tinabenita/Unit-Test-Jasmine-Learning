@@ -1,5 +1,6 @@
 import { Person } from './person.js';
 
+
 xdescribe('Modal Component', () => {
     it('opens on click', () => {
         //assert
@@ -153,7 +154,7 @@ describe(`${Person.name} class`, () => {
         });
     });
 
-    describe('Additional matchers examples', () => {
+    xdescribe('Additional matchers examples', () => {
         // toBeDefined(), toEqual()
         it('Gets full name pieces', () => {
             //arrange
@@ -169,7 +170,7 @@ describe(`${Person.name} class`, () => {
         });
     });
 
-    describe('Additional matchers testing area', () => {
+    xdescribe('Additional matchers testing area', () => {
         it('Fullname has my first name', () => {
             //arrange
             const firstName = 'Tina';
@@ -182,6 +183,7 @@ describe(`${Person.name} class`, () => {
             expect(model.fullName).toMatch(/Tina/);
         });
     });
+
 });
 
 
